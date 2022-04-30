@@ -1,5 +1,4 @@
-let pastSearches =
-  JSON.parse(window.localStorage.getItem("pastSearches")) || [];
+var searchedCities = document.querySelector(".recent-search");
 
 //get data from apis
 let weather = {
@@ -13,13 +12,12 @@ let weather = {
     )
       .then((response) => {
         if (!response.ok) {
-          //alert("No weather found.");
+          //alert("No weather found.") need to fix this to display user the error;
           throw new Error("No weather found.");
         }
         return response.json();
       })
       .then((data) => {
-        console.log(data);
         this.city = data[0].name;
         console.log(this.city);
         fetch(
@@ -29,7 +27,7 @@ let weather = {
           .then((data) => {
             this.displayWeather(data.current);
             this.fiveDays(data.daily);
-            console.log(data);
+            console.log(data.daily);
             this.currentHour(data.hourly);
           });
       });
@@ -57,43 +55,58 @@ let weather = {
   //search bar function
   search: function () {
     this.fetchWeather(document.querySelector(".search-bar").value);
-  },
+  }, 
+  //functions is not working
   currentHour: function (data) {
-    const dt = data[dt];
+    const dt = data[0].dt;
     console.log(data);
-    dt = dt * 100;
+    //dt = (dt * 100);
     document.querySelector(".current-hour").innerHTML =
       "The time in " + this.city + " is " + dt;
   },
-  //five days display boxes
+  //five days display boxes forecast
   fiveDays: function (data) {
     let fiveDays = document.querySelector(".five-days");
-
-    for (i = 0; i < 5; i++) {
+     fiveDays.innerHTML = "";
+    for (i = 1; i < 6; i++) {
       console.log([i]);
       let dayContainerEl = document.createElement("div");
       let dateEl = document.createElement("h4");
-      dateEl.textContent = data[i];
-      dayContainerEl.append(dateEl);
+      dateEl.textContent = data[i].dt;
+      console.log(data)
       let imageEl = document.createElement("img");
       imageEl.setAttribute(
         "src",
         `http://openweathermap.org/img/w/${data[i].weather[0].icon}.png`
       );
-      dayContainerEl.append(imageEl);
       let tempEl = document.createElement("h4");
-      tempEl.textContent = data[i].temp;
-      dayContainerEl.append(tempEl);
+      tempEl.textContent = data[i].temp.day;
       let windEl = document.createElement("h4");
       windEl.textContent = data[i].weather.wind_speed;
-      dayContainerEl.append(windEl);
       let humidityEl = document.createElement("h4");
       humidityEl.textContent = data[i].humidity;
-      dayContainerEl.append(humidityEl);
       fiveDays.append(dayContainerEl);
+      dayContainerEl.append(dateEl, tempEl, windEl, humidityEl, imageEl);
+
     }
   },
 };
+
+function renderPastSearches() {
+  searchedCities.innerHTML = "";
+  for (let i = 0; i < pastSearches.length; i++) {
+    const historyItem = document.createElement("input");
+    historyItem.setAttribute(
+      "class",
+      "form-control d-block bg-white pastSearch"
+    );
+    historyItem.setAttribute("value", pastSearches[i]);
+    historyItem.addEventListener("click", function () {
+      renderPastSearches(historyItem.value);
+    });
+    listSearchedCities.append(historyItem);
+  }
+}
 
 //search bar fnction
 document
