@@ -22,15 +22,14 @@
       </div>
     </nav>
     <main>
-      <div class="recent-search">
-        <div class="divsearch">RECENT SEARCHES</div>
-        <button class="save">SAVE</button>
-        <button class="delete">DELETE</button>
+      <section class="row justify-content-center">
+      <div class="recent-search col-4">
+        <div class="divsearch"></div>
       </div>
       <div class="card">
         <div class="search">
           <input type="text" class="search-bar" placeholder="Search" />
-          <button>
+          <button class="button">
             <svg
               stroke="currentColor"
               fill="currentColor"
@@ -45,14 +44,12 @@
             </svg>
           </button>
         </div>
-        <div class="weather loading">
-          <h2 class="city">London</h2>
+        <div class="weather">
+          <h2 class="city"></h2>
           <h1 class="temp"></h1>
           <div class="flex">
             <img
-              src="https://openweathermap.org/img/wn/04n.png"
-              alt=""
-              class="icon"
+            class="icon"
             />
             <div class="description"></div>
           </div>
@@ -60,8 +57,9 @@
           <div class="wind"></div>
           <div class="timezone"></div>
         </div>
-      </div>
-      <div class="five-days"></div>
-    <main>
+        </div>
+      </section>
+      <div id="five-days"class="row justify-content-center"></div>
+    </main>
   </body>
 </html>

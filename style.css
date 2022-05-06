@@ -8,7 +8,7 @@ body {
   background-size: cover;
 }
 nav {
-  border-color: aqua;
+  border-color: rgb(33, 35, 35);
   border-width: 5vh;
   padding-bottom: 60px;
 }
@@ -21,22 +21,23 @@ main {
   padding-top: 25px;
   font-family: "Open Sans", sans-serif;
   font-size: 120%;
+  flex-direction: column;
 }
 .header {
   justify-content: flex-end;
   justify-content: space-between;
-  border: 13px groove rgba(53, 78, 247, 0.6);
+  border: 13px groove rgba(19, 20, 21, 0.6);
   border-radius: 20px;
   letter-spacing: 20px;
   text-align: center;
   text-decoration: underline;
-  text-shadow: 2px 5px 27px rgba(45, 22, 185, 0.6);
-  color: #2d16b9;
-  box-shadow: -1px 52px 49px 17px rgba(224, 16, 16, 0.6);
+  text-shadow: 2px 5px 27px rgba(163, 162, 170, 0.6);
+  color: #faf9ff;
+  box-shadow: -1px 52px 49px 17px rgba(172, 157, 157, 0.6);
   font-size: 48px;
   font-weight: bolder;
   font-style:calc(85% -35px);
-  background-color: rgb(221, 214, 214);
+  background-color: rgb(123, 100, 100);
   /*width: calc(2em * 10);*/
 }
 .current-hour {
@@ -45,7 +46,7 @@ main {
   letter-spacing: 20px;
   text-align: center;
   padding-left: 25px;
-  display: block;
+  display: flex;
 }
 .recent-search {
   justify-content: flex-end;
@@ -58,29 +59,18 @@ main {
   padding: 2vh;
   border-radius: 20px;
 }
-.save {
-  border-radius: 25px;
-  color: aliceblue;
-  background-color: green;
-  justify-content: center;
-  margin: auto;
-}
-.delete {
-  border-radius: 25px;
-  color: aliceblue;
-  background-color: red;
-  margin: auto;
-}
-.five-days div {
+
+#five-days div {
   background: #000000d0;
   color: white;
   padding: 1em;
   border-radius: 15px;
-  width: 100%;
-  max-width: 200px;
-  margin: 10px;
-  margin-right: 30vh;
-}
+   margin: 10px;
+  /* width: 100%; */
+  /* max-width: 200px;
+   margin: 10px;
+  /* margin-right: 30vh; */
+} 
 
 .card {
   background: #000000d0;
@@ -88,8 +78,8 @@ main {
   padding: 2em;
   border-radius: 30px;
   width: 100%;
-  max-width: 400px;
-  margin: 25em;
+  max-width: 350px;
+  margin: 5em;
 }
 
 .search {
@@ -103,7 +93,7 @@ main {
   border-radius: 30px;
 }
 
-button {
+.button {
   margin: 0.5em;
   border-radius: 50%;
   border: none;
@@ -162,26 +152,36 @@ h1.temp {
   left: 20px;
 }
 
-@each $breakpoint in map-keys($grid-breakpoints) {
-  @include media-breakpoint-up($breakpoint) {
-    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+.recent-search {
+  border: none;
+  outline: none;
+  padding: 0.4em 1em;
+  border-radius: 24px;
+  color: rgb(20, 20, 20);
+  font-family: inherit;
+  font-size: 105%;
+  margin: auto;
+}
 
-    .dropdown-menu#{$infix}-start {
-      --bs-position: start;
 
-      &[data-bs-popper] {
-        right: auto;
-        left: 0;
-      }
-    }
+.recent button {
+  background-color: black;
+  opacity: 1;
+  color:azure;
+  padding: 25px;
+  margin: auto;
+  border-radius: 25px;
+  direction: row;
+}
+.divsearch div {
+ background-color: black;
+ color: aliceblue;
+}
+.recent {
+  opacity: 1;
+  color:azure;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-    .dropdown-menu#{$infix}-end {
-      --bs-position: end;
-
-      &[data-bs-popper] {
-        right: 0;
-        left: auto;
-      }
-    }
-  }
 }
