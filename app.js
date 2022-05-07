@@ -49,8 +49,8 @@ let weather = {
       "Humidity: " + humidity + "%";
     document.querySelector(".wind").innerText =
       "Wind Speed: " + wind_speed + " m/h";
-    document.querySelector(".current-hour").innerText =
-      "The time in " + this.city + "is" + date;
+    // document.querySelector(".current-hour").innerText =
+    //   "The time in " + this.city + "is" + date;
     document.querySelector(".weather").classList.remove("loading");
     document.body.style.backgroundImage =
       "url('https://source.unsplash.com/1600x900/?" + this.city + "')";
@@ -61,26 +61,28 @@ let weather = {
     this.fetchWeather(document.querySelector(".search-bar").value);
   },
   //functions is not working
-  currentHour: function (data) {
-    const dt = data[0].dt;
-    console.log(data);
-    //dt = (dt * 100);
-    document.querySelector(".current-hour").innerHTML =
-      "The time in " + this.city + " is " + dt;
-  },
+  // currentHour: function (data) {
+  //   const dt = data[0];
+  //   let tiempo = (dt * 1000)
+  //   console.log(data);
+  //   //dt = (dt * 100);
+  //   document.querySelector(".current-hour").innerHTML =
+  //     "The time in " + this.city + " is " + tiempo;
+  // },
   //five days display boxes forecast
   fiveDays: function (data) {
     let fiveDays = document.querySelector("#five-days");
     fiveDays.innerHTML = "";
     for (i = 1; i < 6; i++) {
       const { dt } = data[i];
-
+      
       console.log([i]);
       let dayContainerEl = document.createElement("div");
       dayContainerEl.setAttribute("class", "col-2");
       let dateEl = document.createElement("h4");
-      dateEl.textContent = new Date(dt);
-      console.log(Date(dt));
+      dateEl.textContent = new Date(dt * 1000);
+      dateEl.textContent = dateEl.textContent.slice(0,11)
+      console.log(new Date(dt * 1000));
       let imageEl = document.createElement("img");
       imageEl.setAttribute(
         "src",
@@ -108,7 +110,7 @@ let weather = {
 };
 
 function renderPastSearches() {
-  searchedCities.innerHTML = "RECENT SEARCHES";
+  searchedCities.innerHTML = "";
   searchedCities.setAttribute("class", "recent");
   let storedCities = JSON.parse(localStorage.getItem("pastCities")) || [];
   for (let i = 0; i < storedCities.length; i++) {
