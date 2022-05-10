@@ -29,7 +29,7 @@ let weather = {
             this.displayWeather(data.current);
             this.fiveDays(data.daily);
             console.log(data.daily);
-            this.currentHour(data.hourly);
+            // this.currentHour(data.hourly);
             this.saveToStorage(this.city);
             renderPastSearches();
           });

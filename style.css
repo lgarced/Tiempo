@@ -44,13 +44,15 @@ main {
   max-width: 350px;
 
 }
-.current-hour {
+.header-footer {
   font-size: 20px;
   font-weight: bolder;
   letter-spacing: 20px;
   text-align: center;
   padding-left: 25px;
+  font-weight: bolder;
   display: flex;
+  color:black;
 }
 .recent-search {
   justify-content: flex-end;
@@ -189,4 +191,9 @@ h1.temp {
   flex-direction: row;
   align-items: center;
 
+}
+
+.footer {
+  justify-content:center;
+align-items:flex-end;
 }
