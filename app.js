@@ -19,16 +19,13 @@ let weather = {
       })
       .then((data) => {
         this.city = data[0].name;
-        console.log(this.city);
         fetch(
           `https://api.openweathermap.org/data/2.5/onecall?lat=${data[0].lat}&lon=${data[0].lon}&units=imperial&lang=en&appid=${weather.apiKey}`
         )
           .then((res) => res.json())
           .then((data) => {
-            console.log(data);
             this.displayWeather(data.current);
             this.fiveDays(data.daily);
-            console.log(data.daily);
             // this.currentHour(data.hourly);
             this.saveToStorage(this.city);
             renderPastSearches();
@@ -36,10 +33,9 @@ let weather = {
       });
   }, //transform data into html
   displayWeather: function (data) {
-    const { icon, description } = data.weather[0];
+    const { icon, description, main } = data.weather[0];
     const { dt, temp, humidity, wind_speed } = data;
     const date = new Date(dt);
-    console.log(date.getTime());
     document.querySelector(".city").innerText = "Weather in " + this.city;
     document.querySelector(".icon").src =
       "https://openweathermap.org/img/wn/" + icon + ".png";
@@ -60,7 +56,8 @@ let weather = {
   search: function () {
     this.fetchWeather(document.querySelector(".search-bar").value);
   },
-  //functions is not working
+
+  // functions is not working
   // currentHour: function (data) {
   //   const dt = data[0];
   //   let tiempo = (dt * 1000)
@@ -69,20 +66,19 @@ let weather = {
   //   document.querySelector(".current-hour").innerHTML =
   //     "The time in " + this.city + " is " + tiempo;
   // },
-  //five days display boxes forecast
+
+  // five days display boxes forecast
   fiveDays: function (data) {
     let fiveDays = document.querySelector("#five-days");
     fiveDays.innerHTML = "";
     for (i = 1; i < 6; i++) {
       const { dt } = data[i];
-      
-      console.log([i]);
       let dayContainerEl = document.createElement("div");
       dayContainerEl.setAttribute("class", "col-2");
       let dateEl = document.createElement("h4");
       dateEl.textContent = new Date(dt * 1000);
-      dateEl.textContent = dateEl.textContent.slice(0,11)
-      console.log(new Date(dt * 1000));
+      dateEl.textContent = dateEl.textContent.slice(0, 11);
+      dateEl.setAttribute("class", "day")
       let imageEl = document.createElement("img");
       imageEl.setAttribute(
         "src",
@@ -91,7 +87,7 @@ let weather = {
       let tempEl = document.createElement("h4");
       tempEl.textContent = "Temp: " + data[i].temp.day + "°F";
       let windEl = document.createElement("h4");
-      windEl.textContent = "Wind: " + data[i].wind_speed;
+      windEl.textContent = "Wind: " + data[i].wind_speed + "mph";
       let humidityEl = document.createElement("h4");
       humidityEl.textContent = "Humidity: " + data[i].humidity + "%";
       let uviEl = document.createElement("h4");
@@ -107,22 +103,64 @@ let weather = {
     storedCities.push(pastCity);
     localStorage.setItem("pastCities", JSON.stringify(storedCities));
   },
+
+  deleteFromStorage: function (cities) {
+    console.log(cities)
+    let deleteCities = JSON.parse(localStorage.getItem("pastCities"));
+    deleteCities.splice(deleteCities.indexOf(cities), 1);
+    //save updated array to localstorage
+    localStorage.setItem("pastCities", JSON.stringify(deleteCities));
+    renderPastSearches();
+  },
+    
 };
 
 function renderPastSearches() {
   searchedCities.innerHTML = "";
   searchedCities.setAttribute("class", "recent");
+  // let deleteButton = document.createElement("button")
+  // deleteButton.textContent = "DELETE"
   let storedCities = JSON.parse(localStorage.getItem("pastCities")) || [];
   for (let i = 0; i < storedCities.length; i++) {
     const historyItem = document.createElement("button");
+    const deleteIcon = document.createElement("i");
+    deleteIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>`;
+    deleteIcon.addEventListener("click", function (e) {
+     e.stopPropagation();
+     console.log(e)
+      weather.deleteFromStorage();
+    })
     historyItem.textContent = storedCities[i];
     historyItem.addEventListener("click", function () {
       weather.fetchWeather(storedCities[i]);
     });
+    historyItem.append(deleteIcon);
     searchedCities.append(historyItem);
   }
 }
 renderPastSearches();
+
+  // I would like to display a map afterthe five days divs
+
+// let maps = {
+//       apiKey: "4253ae682bded8fe54667e18d996e279",
+//    fetchMaps: function (maps) {
+
+//     fetch(`https://tile.openweathermap.org/map/layer=precipitation_new{z}/{x}/{y}.png?appid=${weather.apiKey}`)
+//     .then((mapas) => {
+//         console.log(mapas)
+//       return mapas.json
+//     })
+//   },
+
+//   displayMap: function(mapas) {
+//     let mapsdisplay = document.createElement("map")
+//     mapsdisplay.
+//   }
+//   };
+
 //search bar fnction
 document
   .querySelector(".search-bar")

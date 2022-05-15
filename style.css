@@ -19,9 +19,12 @@ main {
   align-items: center;
   margin: 0;
   padding-top: 25px;
-  font-family: "Open Sans", sans-serif;
+  /* font-family: "Open Sans", sans-serif; */
   font-size: 120%;
   flex-direction: column;
+}
+h2 {
+  padding-top: 8px;
 }
 .headerst {
    justify-content: flex-end;
@@ -77,6 +80,7 @@ main {
    margin: 10px;
   /* margin-right: 30vh; */
   flex-wrap: wrap;
+  min-width: 225px;
 } 
 
 .card {
@@ -196,4 +200,19 @@ h1.temp {
 .footer {
   justify-content:center;
 align-items:flex-end;
+}
+i {
+      margin-bottom: 15;
+    align-content: flex-end;
+    justify-content: end;
+    margin-left: 20px;
+}
+
+.day {
+  background-color: #faf9ff;
+  color: black;
+  border-radius: 25px;
+  padding: 5px;
+  align-items: center;
+  text-align: center;
 }
